@@ -14,15 +14,14 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install yarn
+        run: npm install -g yarn
+
       - name: Install dependencies
-        run: |
-          npm install -g npm@10
-          npm install --legacy-peer-deps
+        run: yarn install
 
       - name: Build
-        run: npm run build
-        env:
-          NODE_ENV: production
+        run: yarn build
 
       - name: Remove cache (Cloudflare 25MB limit)
         run: rm -rf .next/dev/cache || true
