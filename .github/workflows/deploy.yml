@@ -16,13 +16,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
-        run: ./node_modules/.bin/next build
+        run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: Remove cache (Cloudflare 25MB limit)
-        run: rm -rf .next/dev/cache
+        run: rm -rf .next/dev/cache || true
 
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy .next --project-name image-background-remover --commit-dirty=true
